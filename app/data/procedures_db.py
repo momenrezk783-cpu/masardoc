@@ -273,7 +273,7 @@ PROCEDURES_DATABASE: List[Dict[str, Any]] = [
             }
         ]
     }
-]
+
     {
         "id": "national-id-first-time-foreign-born",
         "title_ar": "استخراج بطاقة الرقم القومي لأول مرة لمواليد الخارج (المملكة المتحدة والدول الأجنبية)",
