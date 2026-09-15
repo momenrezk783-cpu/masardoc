@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسار | MasarDoc - المساعد الإجرائي الذكي للجهات الحكومية والأرشيف</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="container header-container">
+            <div class="brand">
+                <div class="brand-logo">مـسـار</div>
+                <div class="brand-text">
+                    <h1>MasarDoc</h1>
+                    <p>المساعد الإجرائي والقانوني الذكي للجهات الحكومية المصرية والأرشيف التاريخي</p>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="badge badge-status">● متصل بالمنظومة</span>
+                <span class="badge badge-law">القانون المصري رقم 182 & 72</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs-wrapper">
+        <div class="container">
+            <ul class="nav-tabs">
+                <li class="tab-item active" data-tab="procedures-tab">
+                    <span class="tab-icon">🗺️</span>
+                    <span>خرائط الإجراءات الحكومية</span>
+                </li>
+                <li class="tab-item" data-tab="cases-tab">
+                    <span class="tab-icon">📋</span>
+                    <span>متابع القضايا والملفات</span>
+                </li>
+                <li class="tab-item" data-tab="ocr-tab">
+                    <span class="tab-icon">📜</span>
+                    <span>ماسح ومستخرج الدفاتر (OCR)</span>
+                </li>
+                <li class="tab-item" data-tab="poa-tab">
+                    <span class="tab-icon">⚖️</span>
+                    <span>صانع بنود التوكيلات</span>
+                </li>
+                <li class="tab-item" data-tab="regulatory-tab">
+                    <span class="tab-icon">📡</span>
+                    <span>رادار القرارات والكتب الدورية</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container main-content">
+
+        <!-- TAB 1: PROCEDURAL MAPS -->
+        <section id="procedures-tab" class="tab-content active">
+            <div class="section-header">
+                <div>
+                    <h2>الدليل الإجرائي الميداني والتسلسل الإداري</h2>
+                    <p class="subtitle">اختر الإجراء للاطلاع على خريطة الخطوات الميدانية، المتطلبات، الرسوم، وصيغ التوكيلات المطلوبة</p>
+                </div>
+            </div>
+
+            <div class="procedures-grid" id="procedures-list">
+                <!-- Loaded dynamically via JS -->
+            </div>
+
+            <!-- Procedure Detail View Modal/Container -->
+            <div id="procedure-detail-view" class="card procedure-detail-card" style="display: none;">
+                <div class="card-header-flex">
+                    <button class="btn btn-secondary" id="back-to-procedures-btn">← العودة لقائمة الإجراءات</button>
+                    <span class="category-tag" id="proc-category"></span>
+                </div>
+                <h3 id="proc-title" class="proc-title-large"></h3>
+                <p id="proc-overview" class="proc-overview-text"></p>
+                
+                <div class="meta-banner">
+                    <div><strong>الجهة المستهدفة:</strong> <span id="proc-authority"></span></div>
+                    <div><strong>السند القانوني:</strong> <span id="proc-law"></span></div>
+                </div>
+
+                <div class="poa-highlight-box">
+                    <div class="poa-header">
+                        <h4>⚖️ النص الموصى به في التوكيل الرسمي للبدء في هذا الإجراء:</h4>
+                        <button class="btn btn-sm btn-outline" id="copy-poa-btn">نسخ النص</button>
+                    </div>
+                    <p id="proc-poa-text" class="poa-text"></p>
+                </div>
+
+                <h4 class="timeline-title">مراحل وخطوات التنفيذ الميداني:</h4>
+                <div class="steps-timeline" id="proc-steps-timeline">
+                    <!-- Steps loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: CASE PIPELINE & TRACKER -->
+        <section id="cases-tab" class="tab-content">
+            <div class="section-header">
+                <div>
+                    <h2>متابع القضايا ومعاملات الموكلين</h2>
+                    <p class="subtitle">إدارة ومتابعة مراحل التصديقات، أبحاث الأرشيف، وتعديلات الشركات مع تنبيهات صلاحية التوكيلات</p>
+                </div>
+                <button class="btn btn-primary" id="open-new-case-modal">+ إضافة معاملة / قضية جديدة</button>
+            </div>
+
+            <!-- New Case Modal / Inline Form -->
+            <div id="new-case-form-card" class="card" style="display: none; margin-bottom: 24px;">
+                <h3>تسجيل ملف معاملة جديدة</h3>
+                <form id="create-case-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>اسم العميل / الموكل *</label>
+                            <input type="text" id="case-client-name" required placeholder="مثال: ورثة فؤاد المحمودي">
+                        </div>
+                        <div class="form-group">
+                            <label>نوع المعاملة *</label>
+                            <select id="case-type" required>
+                                <option value="استخراج قيود من دار المحفوظات بالقلعة">استخراج قيود من دار المحفوظات بالقلعة</option>
+                                <option value="تصديقات وزارة الخارجية والسفارات">تصديقات وزارة الخارجية والسفارات</option>
+                                <option value="تعديل الشكل القانوني للشركة (GAFI)">تعديل الشكل القانوني للشركة (GAFI)</option>
+                                <option value="إعلام وراثة وحصر تركات">إعلام وراثة وحصر تركات</option>
+                                <option value="استخراج مستندات الأحوال المدنية التاريخية">استخراج مستندات الأحوال المدنية التاريخية</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>بيانات التوكيل</label>
+                            <input type="text" id="case-poa-number" placeholder="رقم التوكيل وسنة التوثيق والمكتب">
+                        </div>
+                        <div class="form-group">
+                            <label>تاريخ انتهاء / صلاحية التوكيل</label>
+                            <input type="date" id="case-poa-expiry">
+                        </div>
+                        <div class="form-group">
+                            <label>المرحلة الحالية</label>
+                            <input type="text" id="case-current-stage" placeholder="مثال: البحث بالدفاتر الورقية أو مكتب تصديقات الخارجية">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>ملاحظات إجرائية وسجل المتابعة</label>
+                        <textarea id="case-notes" rows="2" placeholder="أدخل أرقام المجلدات، أرقام الإيصالات، أو المواعيد المقررة..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">حفظ المعاملة</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-case-btn">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Cases Table / Cards -->
+            <div class="cases-list" id="cases-container">
+                <!-- Loaded dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: HISTORICAL LEDGER OCR -->
+        <section id="ocr-tab" class="tab-content">
+            <div class="section-header">
+                <div>
+                    <h2>ماسح ومستخرج بيانات الدفاتر والأرشيف التاريخي</h2>
+                    <p class="subtitle">استخراج منظم وموثوق لبيانات شهادات الميلاد، الوفاة، دفاتر المكلفات والأطيان غير المميكنة</p>
+                </div>
+            </div>
+
+            <div class="grid-2-col">
+                <div class="card">
+                    <h3>إدخال النص أو فحص المستند الورقي</h3>
+                    <p class="helper-text">اختر نموذجاً تاريخياً مسجلاً لتجربة التحليل والاستخراج الفوري، أو الصق نص الوثيقة المكتشفة:</p>
+                    
+                    <div class="samples-selector-wrapper">
+                        <label>نماذج قيود تاريخية جاهزة:</label>
+                        <select id="ocr-samples-select" class="form-control">
+                            <option value="">-- اختر نموذج وثيقة من الأرشيف --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>عنوان المستند / نوع السجل:</label>
+                        <input type="text" id="ocr-doc-title" value="مستخرج قيد من دار المحفوظات">
+                    </div>
+
+                    <div class="form-group">
+                        <label>نص السجل أو تفريغ الوثيقة الأرشيفية:</label>
+                        <textarea id="ocr-raw-text" rows="10" class="form-control code-text" placeholder="الصق نص المحرر الورقي أو تفريغ قيد الدفتر..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="run-ocr-btn">⚡ تشغيل الفحص واستخراج البيانات المهيكلة</button>
+                </div>
+
+                <div class="card" id="ocr-results-card">
+                    <h3>نتيجة التحليل والاستخراج المنظم</h3>
+                    <div id="ocr-placeholder" class="empty-state">
+                        <span class="empty-icon">🔍</span>
+                        <p>اختر نموذجاً أو الصق نص الوثيقة واضغط على زر التشغيل لاستخراج أرقام الدفاتر، السنوات، وبيانات صاحب القيد والأختام الرسمية.</p>
+                    </div>
+
+                    <div id="ocr-extracted-view" style="display: none;">
+                        <div class="confidence-banner">
+                            <span>درجة اكتمال ومطابقة البيانات:</span>
+                            <span class="confidence-score" id="res-confidence">95%</span>
+                        </div>
+
+                        <table class="data-table">
+                            <tbody>
+                                <tr>
+                                    <th>مقر الحفظ الأرشيفي</th>
+                                    <td id="res-archive-loc"></td>
+                                </tr>
+                                <tr>
+                                    <th>نوع الدفتر / السجل</th>
+                                    <td id="res-ledger-type"></td>
+                                </tr>
+                                <tr>
+                                    <th>اسم صاحب القيد</th>
+                                    <td id="res-person-name" class="highlight-text"></td>
+                                </tr>
+                                <tr>
+                                    <th>اسم الوالد</th>
+                                    <td id="res-father-name"></td>
+                                </tr>
+                                <tr>
+                                    <th>اسم الوالدة</th>
+                                    <td id="res-mother-name"></td>
+                                </tr>
+                                <tr>
+                                    <th>رقم الدفتر والصفحة</th>
+                                    <td id="res-ledger-page"></td>
+                                </tr>
+                                <tr>
+                                    <th>سنة القيد</th>
+                                    <td id="res-year"></td>
+                                </tr>
+                                <tr>
+                                    <th>المحافظة والمركز / القسم</th>
+                                    <td id="res-location"></td>
+                                </tr>
+                                <tr>
+                                    <th>تاريخ الواقعة المسجلة</th>
+                                    <td id="res-event-date"></td>
+                                </tr>
+                                <tr>
+                                    <th>الأختام الرسمية المكتشفة</th>
+                                    <td id="res-stamps" class="stamp-badge"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: SMART POA DRAFTER -->
+        <section id="poa-tab" class="tab-content">
+            <div class="section-header">
+                <div>
+                    <h2>صانع بنود وصيغ التوكيلات الرسمية</h2>
+                    <p class="subtitle">توليد صياغات قانونية دقيقة للتوكيلات الخاصة تمنع رفضها من مكاتب دار المحفوظات، الخارجية، أو الاستثمار</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>اسم الموكل (صاحب الشأن / الممثل القانوني):</label>
+                        <input type="text" id="poa-client-input" placeholder="مثال: فؤاد إبراهيم المحمودي">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم الوكيل (المحامي / المفوض):</label>
+                        <input type="text" id="poa-attorney-input" placeholder="مثال: الأستاذ مؤمن محسن رزق الله - المحامي">
+                    </div>
+                    <div class="form-group">
+                        <label>نوع الإجراء المستهدف:</label>
+                        <select id="poa-procedure-select" class="form-control">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="generate-poa-btn">توليد الصياغة القانونية</button>
+
+                <div class="poa-result-wrapper" style="margin-top: 24px;">
+                    <div class="poa-result-header">
+                        <h4>الصيغة المعتمدة للتضمين في التوكيل الرسمي بالشهر العقاري:</h4>
+                        <button class="btn btn-sm btn-outline" id="copy-full-poa-btn">نسخ النص الكامل</button>
+                    </div>
+                    <textarea id="poa-output-textarea" rows="6" class="form-control poa-textarea" readonly></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: REGULATORY RADAR -->
+        <section id="regulatory-tab" class="tab-content">
+            <div class="section-header">
+                <div>
+                    <h2>رادار الكتب الدورية والقرارات التنظيمية</h2>
+                    <p class="subtitle">متابعة فورية ومباشرة للقرارات والتعليمات الصادرة عن هيئة الاستثمار، الخارجية، ومصلحة الضرائب</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="reg-search-input" placeholder="ابحث في القرارات أو الجهة المصدرة...">
+                </div>
+            </div>
+
+            <div class="regulatory-feed" id="regulatory-feed-container">
+                <!-- Loaded dynamically via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container footer-content">
+            <p>منظومة مسار (MasarDoc) © 2026 — مصممة لدعم المحامين والمستشارين القانونيين ورواد الأعمال في مصر.</p>
+            <p class="footer-meta">واجهة برمجية متوافقة مع الأنظمة الحكومية والمنصات الرقابية المصرية.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
