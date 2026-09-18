@@ -1,3 +1,8 @@
 fastapi>=0.95.0
 uvicorn[standard]>=0.22.0
 pydantic>=1.10.0
+requests
+beautifulsoup4
+pdfplumber
+pymupdf
+pytesseract
