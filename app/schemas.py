@@ -94,3 +94,4 @@ class RegulatoryUpdate(BaseModel):
     summary_en: str
     reference_law: str
     procedural_impact: str
+    source_url: Optional[str] = None
