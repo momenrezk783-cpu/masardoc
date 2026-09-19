@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
-
+import asyncio
 from app.database import init_db
 from app.routers import procedures, cases, ocr, regulatory
 
@@ -22,8 +22,11 @@ app.add_middleware(
 )
 
 @app.on_event("startup")
+async def run_scraper_task():
+    await regulatory_radar.run()
 def on_startup():
     init_db()
+    asyncio.create_task(run_scraper_task())
 
 # Mount API routers
 app.include_router(procedures.router)
