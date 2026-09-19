@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
-import asyncio
+
 from app.database import init_db
 from app.routers import procedures, cases, ocr, regulatory
 
@@ -21,12 +21,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
-async def run_scraper_task():
-    await regulatory_radar.run()
 def on_startup():
+    """Initialize application resources when FastAPI starts."""
     init_db()
-    asyncio.create_task(run_scraper_task())
+
 
 # Mount API routers
 app.include_router(procedures.router)
@@ -39,6 +39,7 @@ STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
+
 @app.get("/")
 def read_root():
     index_path = os.path.join(STATIC_DIR, "index.html")
@@ -50,6 +51,7 @@ def read_root():
         "description": "Intelligent Procedural Navigator for Egyptian Administrative Law",
         "docs_url": "/docs"
     }
+
 
 @app.get("/api/health")
 def health_check():
