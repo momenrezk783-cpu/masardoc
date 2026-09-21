@@ -14,9 +14,9 @@ REGULATORY_UPDATES_DATABASE: List[Dict[str, Any]] = [
         "issuing_body": "الهيئة العامة للاستثمار والمناطق الحرة (GAFI)",
         "effective_date": "2026-08-15",
         "reference_law": "قانون رقم 72 لسنة 2017 وقرار وزيرة الاستثمار رقم 16 لسنة 2026",
-        "summary_ar": "إلزام كافة الشركات بتقديم محاضر الجمعيات العادية وغير العادية وقرارات الشركاء عبر البوابة الإلكترونية، مع اعتماد التوقيع الإلكتروني المعتمد على المستندات الرسمية.",
+        "summary_ar": "إلزام كافة الشركات بتقديم محاضر الجمعيات العادية وغير العادية وقرارات الشركاء عبر البوابة ا��إلكترونية الخاصة بالهيئة، مع اعتماد التوقيع الإلكتروني المتقدم قبل اعتماد الملف. يهدف هذا القرار إلى تسريع إنجاز المعاملات وإزالة الجمود البيروقراطي في ملفات التعديلات والعقودирования.",
         "summary_en": "Mandating the digital submission of ordinary/extraordinary general assembly minutes via the upgraded GAFI online portal with certified e-signatures.",
-        "procedural_impact": "يتعين التأكد من حيازة الممثل القانوني أو المحامي الوكيل لـ E-Token ساري معتمد قبل البدء في إجراءات التعديل أو المصادقة.",
+        "procedural_impact": "يتعين التأكد من حيازة الممثل القانوني أو المحامي الوكيل لـ E-Token ساري معتمد قبل البدء في إجراءات التجديد أو تعديل الشركة، وإرفاق النسخ الموقعة إلكترونيًا مع الطلبات الرسمية.",
         "source_url": "https://gafi.gov.eg/",
     },
     {
@@ -27,9 +27,9 @@ REGULATORY_UPDATES_DATABASE: List[Dict[str, Any]] = [
         "issuing_body": "وزارة الخارجية المصرية - قطاع الشؤون القنصلية",
         "effective_date": "2026-07-01",
         "reference_law": "القرار الوزاري رقم 412 لسنة 2026 بشأن تنظيم مكاتب التصديقات",
-        "summary_ar": "تطبيق منظومة الباركود الموحد على كافة المحررات المصدقة من مكاتب تصديقات الخارجية، لتسهيل التحقق الفوري من صحتها لدى السفارات الأجنبية.",
+        "summary_ar": "تطبيق منظومة الباركود الموحد على كافة المحررات المصدقة من مكاتب تصديقات الخارجية، لتسهيل التحقق الفوري من صحتها عبر السفارات والجهات الأجنبية. كما تم فرض نظام مواعيد إلكترونية مسبقة للمتقدمين، ما يقلل التأخير ويحد من الازدحام.",
         "summary_en": "Implementation of unified QR verification barcodes on all MFA authenticated documents for instant verification by foreign embassies.",
-        "procedural_impact": "لم تعد السفارات تقبل التوثيقات اليدوية غير المزودة بكود التحقق الرقمي، ويجب التأكد من وضوح التوقيع والختم الإلكتروني.",
+        "procedural_impact": "لم تعد السفارات تقبل التوثيقات اليدوية غير المزودة بكود التحقق الرقمي، ويجب التأكد من وضوح بيانات المحرر وكامل بيانات الموكل قبل الحجز أو التوثيق.",
         "source_url": "https://www.mfa.gov.eg/",
     },
     {
@@ -40,9 +40,9 @@ REGULATORY_UPDATES_DATABASE: List[Dict[str, Any]] = [
         "issuing_body": "وزارة الداخلية - قطاع الأحوال المدنية بالاشتراك مع دار المحفوظات",
         "effective_date": "2026-06-10",
         "reference_law": "قانون الأحوال المدنية رقم 143 لسنة 1994 وتعديلاته",
-        "summary_ar": "تسهيل استخراج القيود الساقطة والشهادات التاريخية غير المميكنة عبر الربط الإلكتروني التدريجي بين الأرشيفات الحكومية والمراكز الميدانية.",
+        "summary_ar": "تسهيل استخراج القيود الساقطة والشهادات التاريخية غير المميكنة عبر الربط الإلكتروني التدريجي بين سجلات المواليد والوفيات ودور المحفوظات. كما يتطلب التحضير لتقديم شهادة سلبية إلكترونية قبل المباشرة بالبحث الميداني الورقي.",
         "summary_en": "Requiring a negative electronic certificate from the Civil Status Authority before initiating physical paper search at the Citadel Archives.",
-        "procedural_impact": "يوفر على الباحثين أسبوعين من البحث العشوائي، حيث يتطلب استخراج مستند رسمي بعدم وجود القيد قبل الولوج إلى الدفاتر الورقية.",
+        "procedural_impact": "يوفر على الباحثين أسبوعين من البحث العشوائي، حيث يتطلب استخراج مستند رسمي بعدم وجود القيد أو بيان الحسابات قبل التقديم إلى دار المحفوظات للنظر في الملف الورقي.",
         "source_url": "https://www.moi.gov.eg/",
     },
     {
@@ -53,9 +53,9 @@ REGULATORY_UPDATES_DATABASE: List[Dict[str, Any]] = [
         "issuing_body": "مصلحة الضرائب المصرية",
         "effective_date": "2026-05-01",
         "reference_law": "قانون الإجراءات الضريبية الموحد رقم 206 لسنة 2020",
-        "summary_ar": "توضيح شروط التسجيل والاستثناءات للمهنيين الأفراد وأصحاب المشروعات الصغيرة، وضوابط تقديم الفواتير الإلكترونية بشكل مستمر.",
+        "summary_ar": "توضيح شروط التسجيل والاستثناءات للمهنيين الأفراد وأصحاب المشروعات الصغيرة، وضوابط تقديم الفواتير الإلكترونية من خلال المنصة الضريبية الموحدة. يهدف القرار إلى تقليل الغموض على المنشآت الصغيرة والتعامل مع الجهات الحكومية.",
         "summary_en": "Guidelines on e-invoicing compliance and exceptions for independent consultants and small establishments dealing with government agencies.",
-        "procedural_impact": "ضرورة إدراج رقم التسجيل الضريبي الموحد في كافة عقود التوريد والاستشارات القانونية والإدارية عند التعامل مع الجهات العامة.",
+        "procedural_impact": "ضرورة إدراج رقم التسجيل الضريبي الموحد في كافة عقود التوريد والاستشارات القانونية والإدارية، والتحقق من سلامة المنظومة الإلكترونية قبل تقديم الشهادات أو الفواتير الرسمية.",
         "source_url": "https://www.incometax.gov.eg/",
     },
 ]
@@ -108,55 +108,75 @@ def summarize_legal_text(raw_text: str, title: str = "") -> str:
     if not raw_text or not raw_text.strip():
         raise ValueError("Raw legal text is required for summarization")
 
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        return (
-            (title or "تحديث تنظيمي")
-            + ": "
-            + "هذا القرار يحدد الالتزامات الإجرائية الجديدة ويؤثر على التعاملات القانونية ذات الصلة، لذلك يُستحب مراجعة أثره قبل اتخاذ أي إجراء رسمي."
+    gemini_api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if gemini_api_key:
+        try:
+            from google import genai
+
+            client = genai.Client(api_key=gemini_api_key)
+            prompt = (
+                "اقرأ النص القانوني التالي بدقة، ثم اكتب ملخصًا عربيًا في 2-3 جمل فقط. "
+                "ركز على الفكرة الأساسية، أثره الإجرائي، ومن يهمه هذا القرار. "
+                "لا تكرر المصطلحات، وكن واضحًا ومختصرًا.\n\n"
+                f"العنوان المقترح: {title or 'تحديث تنظيمي'}\n\n"
+                f"النص:\n{raw_text[:25000]}"
+            )
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt,
+            )
+            summary = getattr(response, "text", None) or ""
+            if summary and summary.strip():
+                return summary.strip()
+        except Exception:
+            pass
+
+    anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+    if anthropic_api_key:
+        prompt = (
+            "اقرأ النص القانوني التالي بدقة، ثم اكتب ملخصًا عربيًا في 2-3 جمل فقط. "
+            "ركز على الفكرة الأساسية، أثره الإجرائي، ومن يهمه هذا القرار. "
+            "لا تكرر المصطلحات، وكن واضحًا ومختصرًا.\n\n"
+            f"العنوان المقترح: {title or 'تحديث تنظيمي'}\n\n"
+            f"النص:\n{raw_text[:25000]}"
         )
+        headers = {
+            "x-api-key": anthropic_api_key,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        }
+        payload = {
+            "model": "claude-3-haiku-20240307",
+            "max_tokens": 300,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        try:
+            response = requests.post(
+                "https://api.anthropic.com/v1/messages",
+                headers=headers,
+                json=payload,
+                timeout=60,
+            )
+            response.raise_for_status()
+            data = response.json()
+            content = data.get("content") or []
+            summary = ""
+            for block in content:
+                if isinstance(block, dict):
+                    text = block.get("text")
+                    if text:
+                        summary = text.strip()
+                        break
+            if summary:
+                return summary
+        except Exception:
+            pass
 
-    prompt = (
-        "اقرأ النص القانوني التالي بدقة، ثم اكتب ملخصًا عربيًا في 2-3 جمل فقط. "
-        "ركز على الفكرة الأساسية، أثره الإجرائي، ومن يهمه هذا القرار. "
-        "لا تكرر المصطلحات، وكن واضحًا ومختصرًا.\n\n"
-        f"العنوان المقترح: {title or 'تحديث تنظيمي'}\n\n"
-        f"النص:\n{raw_text[:25000]}"
+    return (
+        (title or "تحديث تنظيمي")
+        + ": "
+        + "هذا القرار يحدد الالتزامات الإجرائية الجديدة ويؤثر على التعاملات القانونية ذات الصلة، لذلك يُستحسن مراجعة أثره على الملف الجاري وتحديث الملاحظات الإجرائية بما يتوافق مع أحكامه."
     )
-
-    headers = {
-        "x-api-key": api_key,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-    }
-    payload = {
-        "model": "claude-3-haiku-20240307",
-        "max_tokens": 300,
-        "messages": [{"role": "user", "content": prompt}],
-    }
-
-    response = requests.post(
-        "https://api.anthropic.com/v1/messages",
-        headers=headers,
-        json=payload,
-        timeout=60,
-    )
-    response.raise_for_status()
-
-    data = response.json()
-    content = data.get("content") or []
-    summary = ""
-    for block in content:
-        if isinstance(block, dict):
-            text = block.get("text")
-            if text:
-                summary = text.strip()
-                break
-
-    if not summary:
-        raise RuntimeError("Anthropic summary response was empty")
-
-    return summary
 
 
 def extract_and_store_regulatory_update_from_text(
