@@ -1,11 +1,11 @@
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, HttpUrl
 
 from app.data.regulatory_db import (
     get_all_regulatory_updates,
     get_regulatory_update_by_id,
-    extract_and_store_regulatory_update_from_text,
 )
 from app.schemas import RegulatoryUpdate
 from scrapers.regulatory_radar.poc_scraper import scrape_and_store_regulatory_update
@@ -13,11 +13,18 @@ from scrapers.regulatory_radar.poc_scraper import scrape_and_store_regulatory_up
 router = APIRouter(prefix="/api/regulatory", tags=["Regulatory Radar"])
 
 
+class RegulatoryScrapeRequest(BaseModel):
+    source_url: HttpUrl
+    title_ar: Optional[str] = None
+    title_en: Optional[str] = None
+    category: Optional[str] = None
+    issuing_body: Optional[str] = None
+    effective_date: Optional[str] = None
+    reference_law: Optional[str] = None
+
+
 @router.get("", response_model=list[RegulatoryUpdate])
-def list_regulatory_updates(
-    category: Optional[str] = None,
-    query: Optional[str] = None,
-):
+def list_regulatory_updates(category: Optional[str] = None, query: Optional[str] = None):
     updates = get_all_regulatory_updates()
     if category:
         updates = [u for u in updates if u.get("category") == category]
@@ -42,35 +49,21 @@ def get_regulatory_update(update_id: str):
 
 
 @router.post("/scrape-and-summarize", response_model=RegulatoryUpdate)
-def create_regulatory_update_from_source(
-    source_url: str,
-    title_ar: Optional[str] = None,
-    title_en: Optional[str] = None,
-    category: Optional[str] = None,
-    issuing_body: Optional[str] = None,
-    effective_date: Optional[str] = None,
-    reference_law: Optional[str] = None,
-):
-    if not source_url:
-        raise HTTPException(status_code=400, detail="source_url is required")
-
+def create_regulatory_update_from_source(payload: RegulatoryScrapeRequest):
+    """Manually fetch, summarize, and add one regulatory update."""
     try:
-        result = scrape_and_store_regulatory_update(
-            target_url=source_url,
-            title_ar=title_ar or "تحديث تنظيمي جديد تم جمعه تلقائيًا",
-            title_en=title_en or "New regulatory update summarized automatically",
-            category=category or "الاستثمار والشركات",
-            issuing_body=issuing_body or "مصدر تلقائي",
-            effective_date=effective_date or "",
-            reference_law=reference_law or "",
+        return scrape_and_store_regulatory_update(
+            target_url=str(payload.source_url),
+            title_ar=payload.title_ar or "تحديث تنظيمي جديد تم جمعه يدويًا",
+            title_en=payload.title_en or "Manually collected regulatory update",
+            category=payload.category or "الاستثمار والشركات",
+            issuing_body=payload.issuing_body or "مصدر يدوي",
+            effective_date=payload.effective_date or "",
+            reference_law=payload.reference_law or "",
         )
-        return result
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except RuntimeError as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
-    except Exception as exc:  # pragma: no cover
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to scrape and summarize legal update: {exc}",
-        ) from exc
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Failed to scrape source: {exc}") from exc
