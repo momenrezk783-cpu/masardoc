@@ -1,12 +1,22 @@
-import sqlite3
 import os
-from typing import Dict, Any, List, Optional
-from datetime import datetime
+import sqlite3
 
 def get_db_path() -> str:
-    # Use environment variable or default to /tmp to ensure compatibility across all environments (e.g. FUSE/Docker)
-    return os.environ.get("MASARDOC_DB_PATH", "/tmp/masardoc.db")
-
+    # قراءة المسار مع إزالة أي علامات اقتباس زائدة إن وُجدت في متغيرات البيئة
+    path = os.environ.get("MASARDOC_DB_PATH", "/tmp/masardoc.db").strip("'\"")
+    
+    try:
+        # استخراج المجلد الأب وإنشاؤه تلقائياً إذا لم يكن موجوداً
+        db_dir = os.path.dirname(os.path.abspath(path))
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
+        return path
+    except Exception as e:
+        # مسار أمان بديل: إذا فشل إنشاء المسار المحدد (بسبب الصلاحيات مثلاً)، استخدم /tmp
+        print(f"[Warning] Failed to use DB path '{path}': {e}. Falling back to /tmp/masardoc.db")
+        os.makedirs("/tmp", exist_ok=True)
+        return "/tmp/masardoc.db"
+        
 def get_db():
     conn = sqlite3.connect(get_db_path(), check_same_thread=False)
     conn.row_factory = sqlite3.Row
