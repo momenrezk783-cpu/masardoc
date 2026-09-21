@@ -10,13 +10,13 @@ from app.routers import procedures, cases, ocr, regulatory
 app = FastAPI(
     title="MasarDoc (مسار)",
     description="Intelligent Procedural Navigator and Verification Assistant for Egyptian Administrative & Legal Workflows",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -28,13 +28,11 @@ def on_startup():
     init_db()
 
 
-# Mount API routers
 app.include_router(procedures.router)
 app.include_router(cases.router)
 app.include_router(ocr.router)
 app.include_router(regulatory.router)
 
-# Mount Static assets
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -49,7 +47,7 @@ def read_root():
         "app": "MasarDoc (مسار)",
         "status": "online",
         "description": "Intelligent Procedural Navigator for Egyptian Administrative Law",
-        "docs_url": "/docs"
+        "docs_url": "/docs",
     }
 
 
@@ -59,5 +57,5 @@ def health_check():
         "status": "healthy",
         "app": "MasarDoc",
         "version": "1.0.0",
-        "database": "sqlite3_ready"
+        "database": "sqlite3_ready",
     }
