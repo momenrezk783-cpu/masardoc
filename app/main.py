@@ -36,15 +36,18 @@ app.include_router(cases.router)
 app.include_router(ocr.router)
 app.include_router(regulatory.router)
 
-STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-if os.path.exists(STATIC_DIR):
+# app/main.py may be used as the deployment entry point. The frontend lives
+# in the repository-level static directory, one level above this file.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_DIR = os.path.join(PROJECT_ROOT, "static")
+if os.path.isdir(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 @app.get("/")
 def read_root():
     index_path = os.path.join(STATIC_DIR, "index.html")
-    if os.path.exists(index_path):
+    if os.path.isfile(index_path):
         return FileResponse(index_path)
     return {
         "app": "MasarDoc (مسار)",
